@@ -2,9 +2,11 @@
 
 ### Available actions
 
-- GET /api/v2/users/:id
-- GET /api/v2/users
-- PUT /api/v2/users/:id
+```
+GET /api/v2/users/:id
+GET /api/v2/users
+PUT /api/v2/users/:id
+```
 
 ### Editable attributes
 
