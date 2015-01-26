@@ -9,9 +9,13 @@ POST /api/v2/comments
 DELETE /api/v2/comments/:id
 ```
 
-### Editable attributes
+### Attributes
 
 - `body`: {String} The body of the comment, in Markdown.
+
+### Editable attributes
+
+- `body`
 
 ### Linked resources
 
