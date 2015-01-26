@@ -9,7 +9,7 @@ This leads to an API that is simple, concise, and predictable.
 
 Here are a few notes for working with our API:
 
-### All responses are plural
+### All response resources are plural
 
 Even if you only request a single resource, e.g. `GET /api/v2/users/1`, the first key of the
 response will be plural. Example:
@@ -36,7 +36,7 @@ In the case that multiple resources have been requested, e.g. `GET /api/v2/users
   },
   {
     "id": "3"
-  }],
+  }]
 }
 ```
 
@@ -51,7 +51,7 @@ For example, this is how a story’s author and comments are represented:
     "id": "101",
     "links": {
       "user": "1",
-      "comments": "1001", "1002", "1003"
+      "comments": ["1001", "1002", "1003"]
     }
   }
 }
@@ -69,17 +69,65 @@ as you build your application.
 
 All requests will yield predictable response codes in their responses.
 
-    200 OK
-    201 Created
-    204 No Content
-    400 Bad Request
-    401 Unauthorized
-    403 Forbidden
-    404 Not Found
-    405 Method Not Allowed
-    409 Conflict
-    415 Unsupported Media Type
-    422 Unprocessable Entity
+#### 200 OK
+
+Everything is A-OK. In the case of updating a resource, all edits were performed successfully.
+The response will always contain the content of the resource requests or modified.
+
+#### 201 Create
+
+Only applicable to POST requests to create a resource. The newly-created resource will always be returned.
+Please see the [Creating Resources section of the JSON API standard.](http://jsonapi.org/format/#crud-creating-resources).
+
+Currently, the Designer News API v2 only supports creating individual resources.
+
+#### 204 No Content
+
+The server understood and performed the request, but it has nothing to say.
+
+In the contetx of a `PUT` request, the request was processed, but no attributes were updated.
+
+In the context of a `DELETE` request, the resource was successfully deleted.
+
+#### 400 Bad Request
+
+HTTP 400 is used as a general catch-all for malformed requests. Please refer to the error response JSON
+for more information.
+
+#### 401 Unauthorized
+
+Creating, updating, or deleting a resource requires authentication via an `Authorization` header.
+If no header is present, or that header is invalid, an `HTTP 401` will be returned.
+
+#### 403 Forbidden
+
+Updating and deleting resources can only be done by admins, mods, or resource owners (like the author
+of a story). If the authorized user is not able to update or delete a given resource, an `HTTP 403`
+will be returned.
+
+#### 404 Not Found
+
+You know the drill.
+
+#### 405 Method Not Allowed
+
+The Designer News API v2 is a work in proress. If a client receives an `HTTP 405`, we have
+not gotten around to implementing that method yet.
+
+#### 409 Conflict
+
+When updating or creating a resource, the given resource conflicts with another resource in the
+database. This is usually triggered to prevent the double-posting of stories or comments.
+
+#### 415 Unsupported Media Type
+
+As the [JSON API spec declares](http://jsonapi.org/format/#document-structure), all documents
+must have the `application/vnd.api+json` media type. Don’t forget to set the `Content-Type` headers
+to this value when creating or updating resources.
+
+#### 422 Unprocessable Entity
+
+If the request has malformed JSON, you will receive this error code.
 
 ### Common error format
 
