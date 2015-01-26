@@ -21,7 +21,6 @@ GET /api/v2/me
 - `job`: {String} The user’s job title.
 - `karma`: {Number} The total karma for the given user.
 - `open_links_in_new_window`: {Boolean} The user prefers to have links open in a new window.
-- `password`: {String} The user’s password.
 - `receive_reply_emails`: {Boolean} Whether or not the user receives email notifications for comment replies on their stories or comments.
 - `receive_digest`: {Boolean} The user receives the weekly digest.
 - `twitter_name`: {String} The user’s Twitter handle, without the '@'.
